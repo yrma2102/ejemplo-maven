@@ -12,24 +12,11 @@ pipeline {
                 }
             }
         }
-        stage("Paso 2: Crear Archivo"){
+        stage("Sonar: Análisis SonarQube"){
             steps {
-                script {
-                sh "echo 'Hello, World Usach!!' > hello-devops-usach-.txt"
-                }
-            }
-        }
-        stage("Paso 3: Guardar Archivo"){
-            steps {
-                script {
-                sh "echo 'Persisitir Archivo!'"
-                }
-            }
-            post {
-                //record the test results and archive the jar file.
-                success {
-                    archiveArtifacts(artifacts:'**/*.txt', followSymlinks:false)
-                }
+                sh "echo 'Calling sonar Service in another docker container!'"
+                // Run Maven on a Unix agent to execute Sonar.
+                sh './mvnw clean verify sonar:sonar'
             }
         }
     }
