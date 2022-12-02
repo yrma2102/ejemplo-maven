@@ -49,7 +49,8 @@ pipeline {
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
-                    sh 'newman run ejemplo-maven.postman_collection.json -n 10 --delay-request 500'
+                    sh 'newman run ejemplo-maven.postman_collection.json'
+                    sh 'sleep 40'
                 }
             }
         }
@@ -102,7 +103,8 @@ pipeline {
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
-                    sh 'newman run ejemplo-maven.postman_collection.json -n 10 --delay-request 500'
+                    sh 'newman run ejemplo-maven.postman_collection.json -n 2 --delay-request 50'
+                    sh 'sleep 100'
                 }
             }
         }
