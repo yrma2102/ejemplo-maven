@@ -45,7 +45,15 @@ pipeline {
                 }
             }
         }
-        stage("Paso 4: Detener Spring Boot"){
+        stage("Paso 4: test newman"){
+            steps {
+                script{
+                    NOMBRE_STAGE = env.STAGE_NAME
+                    sh 'newman run ejemplo-maven.postman_collection.json -n 10 --delay-request 500'
+                }
+            }
+        }
+        stage("Paso 5: Detener Spring Boot"){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
@@ -57,7 +65,7 @@ pipeline {
                 }
             }
         }
-           stage("Paso 5: Subir Artefacto a Nexus"){
+           stage("Paso 6: Subir Artefacto a Nexus"){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
@@ -82,7 +90,7 @@ pipeline {
                 }
             }
         }
-        stage("Paso 6: Descargar Nexus"){
+        stage("Paso 7: Descargar Nexus"){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
@@ -90,7 +98,15 @@ pipeline {
                 }
             }
         }
-         stage("Paso 7: Levantar Artefacto Jar en server Jenkins"){
+        stage("Paso 8: test newman"){
+            steps {
+                script{
+                    NOMBRE_STAGE = env.STAGE_NAME
+                    sh 'newman run ejemplo-maven.postman_collection.json -n 10 --delay-request 500'
+                }
+            }
+        }
+         stage("Paso 9: Levantar Artefacto Jar en server Jenkins"){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
@@ -98,7 +114,7 @@ pipeline {
                 }
             }
         }
-          stage("Paso 8: Testear Artefacto - Dormir(Esperar 20sg) "){
+          stage("Paso 10: Testear Artefacto - Dormir(Esperar 20sg) "){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
@@ -106,7 +122,7 @@ pipeline {
                 }
             }
         }
-        stage("Paso 9:Detener Atefacto jar en Jenkins server"){
+        stage("Paso 11:Detener Atefacto jar en Jenkins server"){
             steps {
                 script{
                      NOMBRE_STAGE = env.STAGE_NAME
