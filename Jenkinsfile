@@ -50,7 +50,6 @@ pipeline {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
                     sh 'newman run ejemplo-maven2.postman_collection.json'
-                    sh 'sleep 40'
                 }
             }
         }
@@ -99,16 +98,7 @@ pipeline {
                 }
             }
         }
-        stage("Paso 8: test newman"){
-            steps {
-                script{
-                    NOMBRE_STAGE = env.STAGE_NAME
-                    sh 'newman run ejemplo-maven.postman_collection.json -n 2 --delay-request 10'
-                    sh 'sleep 100'
-                }
-            }
-        }
-         stage("Paso 9: Levantar Artefacto Jar en server Jenkins"){
+         stage("Paso 8: Levantar Artefacto Jar en server Jenkins"){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
@@ -116,11 +106,19 @@ pipeline {
                 }
             }
         }
-          stage("Paso 10: Testear Artefacto - Dormir(Esperar 20sg) "){
+          stage("Paso 9: Testear Artefacto - Dormir(Esperar 20sg) "){
             steps {
                 script{
                     NOMBRE_STAGE = env.STAGE_NAME
                     sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+                }
+            }
+        }
+        stage("Paso 10: test newman to jar from nexus"){
+            steps {
+                script{
+                    NOMBRE_STAGE = env.STAGE_NAME
+                    sh 'newman run ejemplo-maven2.postman_collection.json -n 2 --delay-request 10'
                 }
             }
         }
